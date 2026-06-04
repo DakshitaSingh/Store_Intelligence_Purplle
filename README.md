@@ -341,5 +341,4 @@ Files:
 - multicam_events.jsonl
 - submission_events.jsonl
 
-## submission_events.jsonl is the final schema-compatible
-## event log generated for challenge submission.
+## submission_events.jsonl is the final schema-compatible event log generated for challenge submission.
