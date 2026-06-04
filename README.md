@@ -329,3 +329,17 @@ The application remains functional once the challenge assets are placed in the e
 * Kafka event streaming
 * PostgreSQL migration
 * Advanced anomaly detection
+
+## Event Logs
+
+Generated event logs are available in:
+
+data/generated_events/
+
+Files:
+- store1_events.jsonl
+- multicam_events.jsonl
+- submission_events.jsonl
+
+submission_events.jsonl is the final schema-compatible
+event log generated for challenge submission.

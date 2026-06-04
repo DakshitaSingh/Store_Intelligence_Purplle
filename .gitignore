@@ -11,7 +11,6 @@ app.log
 # Challenge datasets
 data/videos/
 data/pos/
-data/generated_events/
 data/layouts/
 detection/yolov8n.pt
 
