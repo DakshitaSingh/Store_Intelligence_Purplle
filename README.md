@@ -4,7 +4,7 @@
 
 Store Intelligence Platform converts CCTV footage into retail business insights.
 
-The system processes video streams, generates customer behavioral events, stores them, computes analytics, and exposes insights through APIs and dashboards.
+The system processes CCTV video streams, generates behavioral events, stores them in a database, computes analytics, and exposes insights through APIs and an interactive dashboard.
 
 ---
 
@@ -22,6 +22,34 @@ The system processes video streams, generates customer behavioral events, stores
 
 ---
 
+## Architecture
+
+```text
+Video Streams
+      |
+      v
+Detection & Tracking
+      |
+      v
+Event Generation
+      |
+      v
+FastAPI Ingestion API
+      |
+      v
+SQLite Database
+      |
+      +-------------------+
+      |                   |
+      v                   v
+Analytics Engine     Health Monitoring
+      |
+      v
+Streamlit Dashboard
+```
+
+---
+
 ## Project Structure
 
 ```text
@@ -30,6 +58,9 @@ dashboard/
 detection/
 data/
 tests/
+README.md
+DESIGN.md
+CHOICES.md
 ```
 
 ---
@@ -42,7 +73,7 @@ tests/
 python -m venv venv
 ```
 
-### Activate
+### Activate Environment
 
 Windows:
 
@@ -64,7 +95,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-API:
+API URL:
 
 ```text
 http://127.0.0.1:8000
@@ -78,14 +109,30 @@ http://127.0.0.1:8000
 streamlit run dashboard/app.py
 ```
 
+Dashboard URL:
+
+```text
+http://127.0.0.1:8501
+```
+
 ---
 
 ## Detection Pipeline
+
+Store 1:
 
 ```bash
 cd detection
 
 python process_store.py
+```
+
+Store 2 / Multi-Camera:
+
+```bash
+cd detection
+
+python process_multicam.py
 ```
 
 ---
@@ -94,6 +141,12 @@ python process_store.py
 
 ```bash
 python event_replayer.py
+```
+
+Multi-camera replay:
+
+```bash
+python replay_multicam.py
 ```
 
 ---
@@ -138,17 +191,88 @@ POST /events/ingest
 
 ---
 
+## Event Schema
+
+Generated event logs follow JSONL format.
+
+Supported event types:
+
+* ENTRY
+* EXIT
+* ZONE_ENTER
+* ZONE_DWELL
+* BILLING_QUEUE_JOIN
+
+Each event contains:
+
+* event_id
+* store_id
+* camera_id
+* visitor_id
+* event_type
+* timestamp
+* zone_id
+* dwell_ms
+* is_staff
+* confidence
+* metadata
+
+---
+
+## Docker Deployment
+
+Build:
+
+```bash
+docker-compose build
+```
+
+Run:
+
+```bash
+docker-compose up
+```
+
+API:
+
+```text
+http://localhost:8000
+```
+
+Dashboard:
+
+```text
+http://localhost:8501
+```
+
+---
+
 ## Testing
+
+Run tests:
 
 ```bash
 pytest
 ```
 
-Current status:
+Current Status:
 
 ```text
 4 passed
 ```
+
+---
+
+## Validation
+
+Validated Components:
+
+* Event ingestion
+* Metrics API
+* Funnel API
+* Health API
+* Dashboard integration
+* Docker deployment
 
 ---
 
@@ -164,26 +288,44 @@ Current status:
 
 ---
 
+## requirements.txt
+
+Contains full development dependencies including computer vision libraries used during event generation.
+
+---
+
+## requirements-docker.txt
+
+Contains lightweight runtime dependencies used for API and dashboard deployment.
+
+Large training and inference dependencies are excluded to reduce Docker image size and build time.
+
+---
+
+## Dataset
+
+As required by the challenge guidelines:
+
+Excluded from repository:
+
+* CCTV videos
+* Raw datasets
+* POS source files
+* Store layout assets
+
+Included in repository:
+
+* Generated JSONL event logs required for evaluation
+
+The application remains functional once the challenge assets are placed in the expected data directories.
+
+---
+
 ## Future Enhancements
 
 * Real-time streaming
 * Multi-store analytics
-* Camera re-identification
-* Kafka integration
+* Cross-camera re-identification
+* Kafka event streaming
 * PostgreSQL migration
-
-## requirements.txt:
-Contains full development dependencies including
-computer vision libraries used during event generation.
-
-## requirements-docker.txt:
-Contains lightweight runtime dependencies used for
-API and dashboard deployment. This avoids shipping
-large model packages such as torch inside the
-container and significantly reduces build time.
-
-## Dataset
-
-Challenge datasets, CCTV videos, POS files, generated events, and store layout assets are excluded from this repository as required by the submission guidelines.
-
-The application remains functional once the provided challenge assets are placed in the expected data directories.
+* Advanced anomaly detection
