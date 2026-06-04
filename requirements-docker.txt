@@ -1,0 +1,12 @@
+streamlit
+fastapi
+uvicorn
+sqlalchemy
+pandas
+numpy
+requests
+streamlit
+plotly
+pydantic
+python-multipart
+pytest

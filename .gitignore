@@ -1,0 +1,21 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Runtime
+store.db
+app.log
+
+# Challenge datasets
+data/videos/
+data/pos/
+data/generated_events/
+data/layouts/
+detection/yolov8n.pt
+
+# Optional
+*.mp4
+*.csv
+*.db
