@@ -128,3 +128,73 @@ Less customizable than enterprise BI tools.
 - Queue estimation is heuristic based.
 - Conversion rate uses transaction count rather than customer-level purchases.
 - Tracking quality depends on CCTV visibility and occlusions.
+
+## 8. Model Selection
+
+### Choice
+
+YOLOv8n was selected as the primary person detection model.
+
+### Reason
+
+The challenge prioritizes end-to-end system design and analytics generation over state-of-the-art detection accuracy.
+
+YOLOv8n provides:
+
+- Fast inference
+- Lightweight deployment
+- Good detection performance for retail scenarios
+
+### Trade-off
+
+Lower accuracy than larger YOLO variants but significantly faster and easier to deploy.
+
+---
+
+## 9. Event Schema Design
+
+### Choice
+
+A normalized event schema was adopted for all behavioral events.
+
+### Reason
+
+This allows analytics to be computed independently from the detection pipeline.
+
+The schema captures:
+
+- Visitor identity
+- Timestamp
+- Store ID
+- Camera ID
+- Event type
+- Zone information
+- Metadata
+
+### Trade-off
+
+Increased storage usage compared to storing only aggregate metrics.
+
+---
+
+## 10. API Architecture
+
+### Choice
+
+Analytics are exposed through FastAPI REST endpoints.
+
+### Reason
+
+Separating analytics from visualization allows multiple consumers to access the same data.
+
+Endpoints include:
+
+- /health
+- /stores/{store_id}/metrics
+- /stores/{store_id}/funnel
+- /stores/{store_id}/anomalies
+- /stores/{store_id}/heatmap
+
+### Trade-off
+
+Additional API maintenance compared to a tightly coupled dashboard implementation.

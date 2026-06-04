@@ -166,3 +166,20 @@ Store 2:
 - Queue analytics
 
 This demonstrates that the architecture generalizes across stores with different layouts and camera placements.
+
+## AI-Assisted Decisions
+
+AI assistance was used during the development process to accelerate implementation and documentation.
+
+Areas where AI assistance was utilized:
+
+- API structure and endpoint organization
+- Documentation drafting and formatting
+- Dockerization guidance
+- Dashboard layout suggestions
+- Event schema refinement
+- Testing and validation recommendations
+
+All architectural decisions, business logic, analytics definitions, event generation logic, and implementation details were reviewed, modified, and validated by the author before inclusion in the final solution.
+
+The final system design, engineering trade-offs, and business metrics reflect independent engineering decisions made during project development.
