@@ -198,3 +198,19 @@ Endpoints include:
 ### Trade-off
 
 Additional API maintenance compared to a tightly coupled dashboard implementation.
+
+## 11. Demographic Attributes
+
+### Choice
+
+Demographic attributes such as age and gender were not estimated from CCTV footage.
+
+### Reason
+
+The challenge evaluation primarily focuses on event generation, analytics, API correctness, and system design.
+
+Adding demographic inference would introduce additional model complexity and potential bias without materially impacting the retail analytics objectives.
+
+### Trade-off
+
+Submission event logs export demographic fields as null or "Unknown" values to remain compatible with the reference schema while avoiding unsupported predictions.
